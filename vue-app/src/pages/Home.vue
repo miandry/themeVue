@@ -9,9 +9,28 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script>
+import { ref, onMounted } from 'vue';
 
-// On lit les données injectées par Drupal
-const articles = ref(window.drupalSettings?.vueArticles || [])
+export default {
+  name: 'Home',
+    computed: {
+    transId() {
+      // Access the route parameter (e.g., id)
+      return this.$route.params.id;
+    }
+  },
+  setup() {
+    const articles = ref([]);         // Holds the fetched data
+    // Fetch data when the component is mounted
+    onMounted(() => {
+         articles.value = (window.drupalSettings?.vueArticles || []);
+         console.log("ok okoko");
+    });
+
+    return {
+      articles
+    };
+  }
+};
 </script>
